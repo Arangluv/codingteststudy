@@ -3,12 +3,10 @@ function solution(begin, target, words) {
   let wordLength = words[0].length;
   let wordItems = words.map((item) => item.split(""));
   let splitBegin = begin.split("");
-  let splitTarget = target.split("");
   let visited = Array(words.length).fill(false);
   const queue = [[splitBegin, visited, 0]];
   while (queue.length) {
     let [item, visitedArr, cnt] = queue.shift();
-    console.log(`item join ? ${item.join("")}`);
 
     if (item.join("") === target) {
       if (answer === 0) {
@@ -27,7 +25,6 @@ function solution(begin, target, words) {
       }
       if (count === wordLength - 1 && !visitedArr[i]) {
         visitedArr[i] = true;
-        console.log("실행");
         queue.push([wordItems[i], visitedArr, cnt + 1]);
       }
     }

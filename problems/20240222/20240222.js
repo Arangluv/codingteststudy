@@ -21,7 +21,6 @@ function solution(word) {
     }
   }
   dfs("");
-  console.log(answer);
   return answer;
 }
 solution("EIO");

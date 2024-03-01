@@ -44,7 +44,7 @@ function solution(maps) {
   const queue = [[0, 0, 1]];
 
   while (queue.length) {
-    let [curY, curX, move] = queue.shift();
+    let [curY, curX, move] = queue.shift(); // X와 Y의 위치가 중요하다
     if (curX === goalX && curY === goalY) {
       return move;
     }

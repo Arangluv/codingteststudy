@@ -15,8 +15,7 @@ function solution(brown, yellow) {
       break;
     }
   }
-  answer.sort((a, b) => a - b);
-  console.log(answer);
+  answer.sort((a, b) => b - a);
   return answer;
 }
 solution(8, 1);

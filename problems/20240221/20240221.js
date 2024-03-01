@@ -2,7 +2,6 @@ const solution = (nums) => {
   const set = new Set();
   const arr = nums.split("");
   dfs(set, arr, "");
-  console.log(set);
   return set.size;
 };
 const dfs = (set, arr, fixed) => {

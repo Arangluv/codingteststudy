@@ -1,3 +1,8 @@
+// 다시 풀기
+// 구현 - 천천히 접근
+// https://school.programmers.co.kr/learn/courses/30/lessons/181187
+// 복잡도 생각 -> 초당 1억번연산 -> 최악의 경우 1,000,000 ** 2 연산임
+
 function solution(r1, r2) {
   // 1 <= r1 < r2 <= 1,000,000
 

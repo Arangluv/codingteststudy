@@ -3,7 +3,6 @@
 
 function solution(arr) {
   arr.sort((a, b) => b - a);
-  console.log(arr);
   let i = 0;
   while (true) {
     if (i + 1 <= arr[i]) {

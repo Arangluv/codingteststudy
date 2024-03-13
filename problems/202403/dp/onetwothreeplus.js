@@ -3,8 +3,6 @@ const filePath = process.platform === "linux" ? "/dev/stdin" : "input.txt";
 let input = fs.readFileSync(filePath).toString().trim().split("\n");
 
 let nArr = input.map((n) => parseInt(n));
-console.log(nArr);
-
 function solution(n) {
   let dp = Array(11).fill(0);
   dp[1] = 1;

@@ -21,7 +21,7 @@ const getLcm = (a, b) => {
 function solution(arr) {
   let numArr = arr.sort((a, b) => b - a);
   let answer = numArr[0];
-  // n개의 최대 공약수를 찾는다s
+  // n개의 최대 공약수를 찾는다
   for (let i = 1; i < numArr.length; i++) {
     answer = getLcm(answer, numArr[i]);
   }

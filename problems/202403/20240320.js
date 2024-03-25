@@ -33,7 +33,6 @@ function solution(want, number, discount) {
       }
     }
     if (tempMap.size === 0) answer++;
-    console.log(tempMap.size);
   }
   return answer;
 }

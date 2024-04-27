@@ -3,24 +3,10 @@
 
 function solution(n, left, right) {
   let answer = [];
-  let prevN = 1;
   for (let i = left; i <= right; i++) {
-    let quotient = Math.floor(i / n);
     let mob = i % n;
-    if (quotient === 0) {
-      prevN++;
-      answer.push(prevN);
-      continue;
-    }
-    if (mob < prevN) {
-      answer.push(prevN);
-      continue;
-    }
-    if (mob === prevN) {
-      prevN++;
-      answer.push(prevN);
-      continue;
-    }
+    let quotient = Math.floor(i / n);
+    answer.push(Math.max(mob, quotient) + 1);
   }
   return answer;
 }

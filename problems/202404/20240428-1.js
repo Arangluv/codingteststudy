@@ -20,13 +20,18 @@
 function solution(cacheSize, cities) {
   let INITIAL_SIZE = cacheSize * 5;
   let size = 0;
-  let cache = cities.slice(0, cacheSize);
+  let cache = cities.slice(0, cacheSize).reverse();
+  console.log("실행");
+  if (cacheSize === 0) {
+    console.log("여기가 실행");
+    return cities.length * 5;
+  }
   for (let i = cacheSize; i < cities.length; i++) {
     let idx = -1;
-    console.log(`cache ${cache}`);
     for (let j = 0; j < cacheSize; j++) {
       // cache 안에 있는지 검사
-      if (cache[j] === cities[i]) {
+      console.log("여기?");
+      if (cache[j].toUpperCase() === cities[i].toUpperCase()) {
         idx = j;
         break;
       }
@@ -34,34 +39,23 @@ function solution(cacheSize, cities) {
     if (idx !== -1) {
       // cache 안에 city가 존재
       let temp = cache[idx];
-      for (let x = 0; x < idx; x++) {
+      for (let x = idx - 1; x >= 0; x--) {
         cache[x + 1] = cache[x];
       }
       cache[0] = temp;
-
+      console.log(`캐시 없음 : ${cache}`);
       size += 1;
     } else {
       // cache안에 없음
-      for (let x = 0; x < cacheSize; x++) {
+      for (let x = cacheSize - 2; x >= 0; x--) {
         cache[x + 1] = cache[x];
       }
       cache[0] = cities[i];
+      console.log(`캐시 있음 : ${cache}`);
       size += 5;
     }
   }
 
   return size + INITIAL_SIZE;
 }
-console.log(
-  solution(3, [
-    "Jeju",
-    "Pangyo",
-    "Seoul",
-    "Jeju",
-    "Pangyo",
-    "Seoul",
-    "Jeju",
-    "Pangyo",
-    "Seoul",
-  ])
-);
+console.log(solution(5, ["a", "b", "c", "b", "a"]));

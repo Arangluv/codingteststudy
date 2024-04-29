@@ -18,44 +18,36 @@
  *  [5, 5, 5, 5, 5, 1, 1, 1, 1, 1]
  */
 function solution(cacheSize, cities) {
-  let INITIAL_SIZE = cacheSize * 5;
-  let size = 0;
-  let cache = cities.slice(0, cacheSize).reverse();
-  console.log("실행");
+  cities = cities.map((str) => str.toUpperCase());
   if (cacheSize === 0) {
-    console.log("여기가 실행");
     return cities.length * 5;
   }
-  for (let i = cacheSize; i < cities.length; i++) {
-    let idx = -1;
-    for (let j = 0; j < cacheSize; j++) {
-      // cache 안에 있는지 검사
-      console.log("여기?");
-      if (cache[j].toUpperCase() === cities[i].toUpperCase()) {
-        idx = j;
-        break;
+  let size = 0;
+  let cache = [];
+  for (let i = 0; i < cities.length; i++) {
+    let idx = cache.indexOf(cities[i]);
+    if (idx === -1) {
+      // cache에 없는 경우
+      if (cache.length !== cacheSize) {
+        cache.unshift(cities[i]);
+        size += 5;
+        continue;
       }
-    }
-    if (idx !== -1) {
-      // cache 안에 city가 존재
+      cache.pop();
+      cache.unshift(cities[i]);
+      size += 5;
+      continue;
+    } else {
+      // cache에 있는 경우
       let temp = cache[idx];
-      for (let x = idx - 1; x >= 0; x--) {
-        cache[x + 1] = cache[x];
+      for (let j = idx - 1; j >= 0; j--) {
+        cache[j + 1] = cache[j];
       }
       cache[0] = temp;
-      console.log(`캐시 없음 : ${cache}`);
       size += 1;
-    } else {
-      // cache안에 없음
-      for (let x = cacheSize - 2; x >= 0; x--) {
-        cache[x + 1] = cache[x];
-      }
-      cache[0] = cities[i];
-      console.log(`캐시 있음 : ${cache}`);
-      size += 5;
+      continue;
     }
   }
-
-  return size + INITIAL_SIZE;
+  return size;
 }
-console.log(solution(5, ["a", "b", "c", "b", "a"]));
+console.log(solution(2, ["Jeju", "Pangyo", "NewYork", "newyork"]));

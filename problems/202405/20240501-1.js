@@ -51,6 +51,12 @@ function solution(msg) {
     }
     while (flg) {
       prevWord = msgArr.slice(i, sliceCount).join("");
+      if (sliceCount > msgArr.length) {
+        flg = false;
+        answer.push(wordMap.get(msgArr.slice(i, sliceCount - 1).join("")));
+        i = sliceCount - 1;
+        break;
+      }
       if (wordMap.get(prevWord)) {
         sliceCount++;
         continue;
@@ -58,11 +64,11 @@ function solution(msg) {
         flg = false;
         wordMap.set(prevWord, addCount++);
         answer.push(wordMap.get(msgArr.slice(i, sliceCount - 1).join("")));
+        i = sliceCount - 1;
       }
     }
-    i = sliceCount - 1;
   }
   return answer;
 }
 
-console.log(solution("KAKAO"));
+console.log(solution("TOBEORNOTTOBEORTOBEORNOT"));

@@ -54,6 +54,7 @@ function solution(str1, str2) {
   let intersection = [];
 
   let firstMap = new Map();
+  let secondMap = new Map();
   for (let cluster of firstCluster) {
     if (firstMap.get(cluster)) {
       firstMap.set(cluster, firstMap.get(cluster) + 1);
@@ -62,6 +63,15 @@ function solution(str1, str2) {
     }
   }
   for (let cluster of secondCluster) {
+    if (secondMap.get(cluster)) {
+      secondMap.set(cluster, secondMap.get(cluster) + 1);
+    } else {
+      secondMap.set(cluster, 1);
+    }
+  }
+  let unionFirstMap = new Map(firstMap);
+
+  for (let cluster of secondCluster) {
     if (!firstMap.get(cluster) || firstMap.get(cluster) === 0) {
       continue;
     } else {
@@ -69,16 +79,26 @@ function solution(str1, str2) {
       firstMap.set(cluster, firstMap.get(cluster) - 1);
     }
   }
-  console.log("intersection");
-  console.log(intersection);
   // 여기 까지 잘 구한게 맞음
   // union 구하는 과정에서 set 사용이 miss
   // 이 부분 로직 수정할 것
+  for (let [key, value] of secondMap) {
+    if (unionFirstMap.get(key)) {
+      if (unionFirstMap.get(key) < value) {
+        unionFirstMap.set(key, value);
+      }
+    } else {
+      unionFirstMap.set(key, value);
+    }
+  }
+  let union = [];
+  for (let [key, value] of unionFirstMap) {
+    for (let i = 1; i <= value; i++) {
+      union.push(key);
+    }
+  }
 
-  let union = new Set([...firstCluster, ...secondCluster]); // 합집합을 구하기 위해
-  console.log("union");
-  console.log(union);
-  let answer = union.size !== 0 ? intersection.length / union.size : 1;
+  let answer = union.length !== 0 ? intersection.length / union.length : 1;
   return Math.floor(answer * 65536);
 }
 console.log(solution("handshake", "shake hands"));

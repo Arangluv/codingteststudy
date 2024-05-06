@@ -5,30 +5,25 @@ function solution(land) {
   // land는 N X 4 2차원 배열
   // X행에서 Y열을 밟았다면, 다음 X + 1 행에서 Y열을 못 밟는다
   // 밟고 내려올 수 있는 최대 값을 return;
-  let answer = 0;
-  function dfs(index, count, sum) {
-    // 모든 행을 비교했다면 answer를 초기화하고 재귀를 종료한다.
-    if (count === land.length) {
-      answer = answer === 0 ? sum : Math.max(answer, sum);
-      return;
+  // bfs 시간초과, DP로 다시해결 -> 내려올때마다 최대값 갱신
+  for (let i = 1; i < land.length; i++) {
+    if (i === land.length - 1) {
+      console.log(Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][3]));
+      console.log(land[i][0]);
     }
-    for (let i = 0; i < 4; i++) {
-      if (index === i) {
-        continue;
-      } else {
-        dfs(i, count + 1, sum + land[count][i]);
-      }
-    }
+    land[i][0] += Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][3]);
+    land[i][1] += Math.max(land[i - 1][0], land[i - 1][2], land[i - 1][3]);
+    land[i][2] += Math.max(land[i - 1][1], land[i - 1][3], land[i - 1][0]);
+    land[i][3] += Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][0]);
   }
-  for (let i = 0; i < 4; i++) {
-    dfs(i, 0, 0);
-  }
-  return answer;
+  console.log("land");
+  console.log(land);
+  return Math.max(...land[land.length - 1]);
 }
 console.log(
   solution([
-    [1, 2, 3, 5],
-    [5, 6, 7, 8],
-    [4, 3, 2, 1],
+    [1, 1, 1, 2],
+    [2, 2, 2, 3],
+    [3, 3, 3, 4],
   ])
 );

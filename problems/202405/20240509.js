@@ -24,6 +24,13 @@ const findIndex = (str) => {
       break;
     }
   }
+  // 마지막 index 검사
+  if (
+    startIndex !== -1 &&
+    (parseInt(str[str.length - 1]) || parseInt(str[str.length - 1]) === 0)
+  ) {
+    endIndex = str.length - 1;
+  }
   if (startIndex !== -1 && endIndex === -1) {
     endIndex = startIndex;
   }
@@ -76,7 +83,7 @@ function solution(files) {
   return files;
 }
 
-console.log(solution(["aaa aa", "a aa aaa", "a aaa a", "aa", "a a"]));
+console.log(solution(["aa14", "aa"]));
 // ["aa", "a a", "aaa aa", "a aa aaa", "a aaa a"] -> 기대값
 // [ 'aa', 'a a', 'aaa aa', 'a aaa a', 'a aa aaa' ] -> 결과값
 console.log("a aa aaa".localeCompare("a aaa aa"));

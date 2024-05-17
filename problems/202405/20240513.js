@@ -4,7 +4,6 @@
 // 서브 - 본컨테이너 옮겨다닐 수 있다
 // [1,2,4,3,5] -> 5
 
-
 function solution(order) {
   let truck = 0;
   let main_trail_index = 1;

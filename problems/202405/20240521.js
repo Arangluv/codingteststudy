@@ -37,52 +37,46 @@ class Queue {
     }
     return data;
   }
+  peek() {
+    if (!this.head) {
+      return Infinity;
+    }
+    return this.head.value;
+  }
 }
 
 function solution(bridge_length, weight, truck_weights) {
-  let answer = 0;
-  const queue = new Queue();
-  const bridge = new Queue();
+  let time = 0;
+  let queue = new Queue();
+  let bridge = new Queue();
+  let bridgeTrigger = 0;
   truck_weights.forEach((truck) => queue.unshift(truck));
-  while (queue.length()) {
-    let truck = queue.shift();
-    if (weight >= truck) {
-      weight -= truck;
+  while (queue.length() || bridge.length()) {
+    time++;
+    if (queue.peek() <= weight && bridgeTrigger < bridge_length) {
+      let truck = queue.shift();
       bridge.unshift(truck);
-      answer++;
-      if (!queue.length()) {
-        let crossingTime = bridge_length - bridge.length();
-        while (bridge.length()) {
-          bridge.shift();
-          crossingTime++;
-        }
-        answer += crossingTime;
-        break;
-      }
+      bridgeTrigger++;
+      weight -= truck;
       continue;
-    } else {
-      // weight < truck
-      let crossingTime = bridge_length - bridge.length();
-
-      while (bridge.length()) {
-        let truck = bridge.shift();
-        weight += truck;
-        crossingTime++;
-      }
-      answer += crossingTime;
     }
-    bridge.unshift(truck);
-    weight -= truck;
-    if (!queue.length()) {
-      let crossingTime = bridge_length - bridge.length();
-      while (bridge.length()) {
-        bridge.shift();
-        crossingTime++;
+    if (queue.peek() > weight && bridgeTrigger < bridge_length) {
+      bridgeTrigger++;
+      continue;
+    }
+    if (queue.peek() > weight && bridgeTrigger === bridge_length) {
+      let outTruck = bridge.shift();
+      weight += outTruck;
+      bridgeTrigger--;
+      if (queue.length() && queue.peek() <= weight) {
+        let newTruck = queue.shift();
+        bridge.unshift(newTruck);
+        weight -= newTruck;
+        bridgeTrigger++;
       }
-      answer += crossingTime;
-      break;
     }
   }
-  return answer;
+  return time;
 }
-console.log(solution(100, 100, [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]));
+
+console.log(solution(2, 10, [7, 4, 5, 6]));

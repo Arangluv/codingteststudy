@@ -47,34 +47,23 @@ class Queue {
 
 function solution(bridge_length, weight, truck_weights) {
   let time = 0;
-  let queue = new Queue();
-  let bridge = new Queue();
-  let bridgeTrigger = 0;
-  truck_weights.forEach((truck) => queue.unshift(truck));
-  while (queue.length() || bridge.length()) {
-    time++;
-    if (queue.peek() <= weight && bridgeTrigger < bridge_length) {
-      let truck = queue.shift();
-      bridge.unshift(truck);
-      bridgeTrigger++;
-      weight -= truck;
-      continue;
+  let queue = [[0, 0]]; // [weight, outOftime]
+  let sum = 0;
+  let truckArr = truck_weights.reverse();
+  // 대기하는 트럭이나, 다리를 건너는 트럭이 모두 0일때까지
+  while (queue.length !== 0 || truckArr.length) {
+    if (queue[0][1] === time) {
+      sum -= queue.shift()[0];
     }
-    if (queue.peek() > weight && bridgeTrigger < bridge_length) {
-      bridgeTrigger++;
-      continue;
-    }
-    if (queue.peek() > weight && bridgeTrigger === bridge_length) {
-      let outTruck = bridge.shift();
-      weight += outTruck;
-      bridgeTrigger--;
-      if (queue.length() && queue.peek() <= weight) {
-        let newTruck = queue.shift();
-        bridge.unshift(newTruck);
-        weight -= newTruck;
-        bridgeTrigger++;
+    if (sum + truckArr[truckArr.length - 1] <= weight) {
+      sum += truckArr[truckArr.length - 1];
+      queue.push([truckArr.pop(), time + bridge_length]);
+    } else {
+      if (queue[0]) {
+        time = queue[0][1] - 1;
       }
     }
+    time++;
   }
   return time;
 }

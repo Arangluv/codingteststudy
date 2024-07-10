@@ -8,9 +8,6 @@ function solution(number, k) {
   for (let i = 1; i < arr.length; i++) {
     if (k === 0) break;
     let current = parseInt(arr[i]);
-    if (current === 2) {
-      console.log("여기 실행");
-    }
     if (prev[0] < current) {
       let [value, idx] = prev;
       k--;
